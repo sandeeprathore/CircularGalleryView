@@ -1,14 +1,10 @@
 package org.sam.applications.galleryviewdemo;
 
-import java.util.zip.Inflater;
-
-import android.os.Bundle;
 import android.app.Activity;
-import android.app.ActionBar.LayoutParams;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,25 +13,22 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+@SuppressWarnings("deprecation")
 public class GalleryViewDemo extends Activity {
 
 	public final static int ADDED_EXTRA = Integer.MAX_VALUE;
-	Gallery myGallery;
+	private Gallery mGallery;
 	private TextView tv;
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		setContentView(R.layout.activity_gallery_view_demo);
 
-		// Bind the gallery defined in the main.xml
-		// Apply a new (customized) ImageAdapter to it.
-
-		myGallery = (Gallery) findViewById(R.id.gallery);
+		mGallery = (Gallery) findViewById(R.id.gallery);
 		tv = (TextView)findViewById(R.id.textView);
-		myGallery.setAdapter(new ImageAdapter(this));
-		myGallery.setOnItemSelectedListener(new OnItemSelectedListener() {
+		mGallery.setAdapter(new ImageAdapter(this));
+		mGallery.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView<?> parent, View v,
 					int position, long id) {
@@ -46,20 +39,17 @@ public class GalleryViewDemo extends Activity {
 			}
 
 			public void onNothingSelected(AdapterView<?> parent) {
-				//mySelection.setText("Nothing selected");
-
+				//To-Do
 			}
 
 
 		});
-	}// onCreate
+	}
 
 	public class ImageAdapter extends BaseAdapter {
 		/** The parent context */
 		private Context myContext;
-		private Inflater inflater;
-		// Put some images to project-folder: /res/drawable/
-		// format: jpg, gif, png, bmp, ...
+		
 		private int[] myImageIds = { R.drawable.gallery_photo_1, R.drawable.gallery_photo_2,
 				R.drawable.gallery_photo_3, R.drawable.gallery_photo_4, R.drawable.gallery_photo_5};
 
@@ -68,8 +58,9 @@ public class GalleryViewDemo extends Activity {
 			this.myContext = c;
 		}
 
-		// inherited abstract methods - must be implemented
-		// Returns count of images, and individual IDs
+		/**
+		 * Returns the no. of views to be inflated. Infinite for Circular View
+		 */
 		public int getCount() {
 			return Integer.MAX_VALUE;
 		}
@@ -91,7 +82,7 @@ public class GalleryViewDemo extends Activity {
 			if(convertView==null)
 		       {
 		       convertView = LayoutInflater
-		         .from(parent.getContext())
+		         .from(myContext)
 		         .inflate(R.layout.image_view, null);
 		       }
 			ImageView iv = (ImageView)convertView.findViewById(R.id.imageView); 
@@ -103,37 +94,7 @@ public class GalleryViewDemo extends Activity {
 			iv.setScaleType(ImageView.ScaleType.CENTER);
 			return convertView;
 
-			/*if (position < ADDED_EXTRA / 2) {
-				position = this.myImageIds.length
-						- (ADDED_EXTRA / 2 - position);
-			} else if (position >= (this.myImageIds.length + (ADDED_EXTRA / 2))) {
-				position = position
-						- (this.myImageIds.length + (ADDED_EXTRA / 2));
-			} else {
-				position -= (ADDED_EXTRA / 2);
-			}
-
-			//			if (position >= myImageIds.length) {
-			//				position = position % myImageIds.length;
-			//			}
-			// Get a View to display image data 					
-			ImageView iv = new ImageView(this.myContext);
-			iv.setImageResource(this.myImageIds[position]);
-
-			// Image should be scaled somehow
-			iv.setScaleType(ImageView.ScaleType.CENTER);
-			//iv.setScaleType(ImageView.ScaleType.CENTER_CROP);			
-			//iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-			//iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
-			//iv.setScaleType(ImageView.ScaleType.FIT_XY);
-			//iv.setScaleType(ImageView.ScaleType.FIT_END);
-
-			// Set the Width & Height of the individual images
-			iv.setLayoutParams(new Gallery.LayoutParams(LayoutParams.MATCH_PARENT , LayoutParams.WRAP_CONTENT));
-
-			return iv;*/
-		}
-	}// ImageAdapter
-}// AndDemoUI
-
+					}
+	}
+}
 
