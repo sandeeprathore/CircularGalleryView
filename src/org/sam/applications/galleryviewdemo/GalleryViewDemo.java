@@ -28,6 +28,7 @@ public class GalleryViewDemo extends Activity {
 		mGallery = (Gallery) findViewById(R.id.gallery);
 		tv = (TextView)findViewById(R.id.textView);
 		mGallery.setAdapter(new ImageAdapter(this));
+		mGallery.setSelection(Integer.MAX_VALUE/2 + 2);
 		mGallery.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView<?> parent, View v,
@@ -50,8 +51,8 @@ public class GalleryViewDemo extends Activity {
 		/** The parent context */
 		private Context myContext;
 		
-		private int[] myImageIds = { R.drawable.gallery_photo_1, R.drawable.gallery_photo_2,
-				R.drawable.gallery_photo_3, R.drawable.gallery_photo_4, R.drawable.gallery_photo_5};
+		private int[] myImageIds = { R.drawable.image_1_selector, R.drawable.image_2_selector,
+				R.drawable.image_3_selector, R.drawable.image_4_selector, R.drawable.image_5_selector};
 
 		/** Simple Constructor saving the 'parent' context. */
 		public ImageAdapter(Context c) {
